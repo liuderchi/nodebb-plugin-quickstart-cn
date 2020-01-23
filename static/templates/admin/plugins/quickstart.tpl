@@ -1,3 +1,4 @@
+<!-- NOTE: shown in http://localhost:4567/admin/plugins/quickstart -->
 <form role="form" class="quickstart-settings">
 	<div class="row">
 		<div class="col-sm-2 col-xs-12 settings-header">General</div>

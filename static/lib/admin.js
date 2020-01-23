@@ -5,6 +5,9 @@
 define('admin/plugins/quickstart', ['settings'], function (Settings) {
 	var ACP = {};
 
+	// run in plugin settings page
+	console.log('in admin.js')
+
 	ACP.init = function () {
 		Settings.load('quickstart', $('.quickstart-settings'));
 
