@@ -31,6 +31,7 @@ Core.init = async (params) => {
 
 Core.addAdminNavigation = async (header) => {
   header.plugins.push({
+    // add menu in "Plugins" dropdown http://localhost:4567/admin
     route: '/plugins/quickstart',
     icon: 'fa-tint',
     name: 'Quickstart (fork)'
