@@ -33,7 +33,7 @@ Core.addAdminNavigation = async (header) => {
   header.plugins.push({
     route: '/plugins/quickstart',
     icon: 'fa-tint',
-    name: '快速开始'
+    name: 'Quickstart (fork)'
   })
   return header
 }
