@@ -2,6 +2,24 @@
 
 /* globals document, $ */
 
+// retry a function () => Promise, with cooldown and maximum retries
+// https://gist.github.com/briancavalier/842626#gistcomment-2703073
+const retry = (fn, retriesLeft = 5, interval = 1000) => {
+  return new Promise((resolve, reject) => {
+    fn()
+      .then(resolve)
+      .catch(error => {
+        setTimeout(() => {
+          if (retriesLeft === 1) {
+            reject(error);
+            return;
+          }
+          retry(fn, interval, retriesLeft - 1).then(resolve, reject);
+        }, interval);
+      });
+  });
+};
+
 $(document).ready(function() {
   /*
   这个文件告诉我们：如何引入一个客户端 js 脚本
@@ -30,15 +48,20 @@ $(document).ready(function() {
           const html = `<li class=""><a class="navigation-link" href="/category/${slug}" title="" data-original-title="${name}"><i class="fa fa-fw ${icon}" data-content=""></i><span class="visible-xs-inline"> ${name}</span></a></li>`;
           return { name, icon, href: `/category/${slug}`, html };
         });
-        // append nodes
-        setTimeout(() => {
-          const ulDom = document.querySelector("ul.menu-section-list");
-          // TODO wait until ulDom has children
-          const liDom = ulDom.querySelector("li:nth-child(2)");
-          categories.forEach(c => {
-            ulDom.insertBefore($.parseHTML(c.html)[0], liDom);
-          });
-        }, 500);
+        retry(
+          () => {
+            const ulDom = document.querySelector("ul.menu-section-list");
+            const liDom = ulDom.querySelector("li:nth-child(2)");
+            if (!liDom) return Promise.reject("side bar is not ready");
+
+            categories.forEach(c => {
+              ulDom.insertBefore($.parseHTML(c.html)[0], liDom);
+            });
+            return Promise.resolve("done");
+          },
+          5,
+          500
+        );
       })
       .catch(console.error);
   }
