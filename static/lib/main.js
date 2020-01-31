@@ -65,4 +65,34 @@ $(document).ready(function() {
       })
       .catch(console.error);
   }
+
+  // theming
+  console.group();
+  console.log("start theme");
+
+  try {
+    const headerMenuDom = document.querySelector("nav#header-menu");
+    headerMenuDom.style.backgroundColor = "#283e4a";
+
+    const h1Dom = headerMenuDom.querySelector("h1");
+    if (h1Dom) h1Dom.style.color = "#fff";
+
+    const iconDoms = Array.from(headerMenuDom.querySelectorAll("i"));
+    iconDoms.forEach(i => {
+      i.style.color = "#fff";
+    });
+	// TODO move this to css
+    const activeIconDom = document.querySelector(".navbar-nav>.active>a");
+    if (activeIconDom) {
+      activeIconDom.style.backgroundColor = "rgb(70, 109, 130)";
+    }
+
+    const footerDom = document.querySelector("footer");
+    if (footerDom) footerDom.style.display = "none";
+  } catch (error) {
+    console.error(error);
+  }
+
+  console.log("theme done");
+  console.groupEnd();
 });
