@@ -49,6 +49,5 @@
     "husky": "^2.4.0",
     "lint-staged": "^8.2.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
